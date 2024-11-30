@@ -22,7 +22,7 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://ordinariobalam.azurecr.io/
+        registry: https://ordcontbalam.azurecr.io/
         username: ${{ secrets.AzureAppService_ContainerUsername_11c04bd0839a4ca58cd58408ff37144c }}
         password: ${{ secrets.AzureAppService_ContainerPassword_972222e2ba424f10a8242be03758ae1d }}
 
@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ordinariobalam.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_11c04bd0839a4ca58cd58408ff37144c }}/ordinarioback:${{ github.sha }}
+        tags: ordcontbalam.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_11c04bd0839a4ca58cd58408ff37144c }}/ordinarioback:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'OrdinarioBalam'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_e7581aa6b1fa43be9d7c15279ac4f1c7 }}
-        images: 'ordinariobalam.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_11c04bd0839a4ca58cd58408ff37144c }}/ordinarioback:${{ github.sha }}'
+        images: 'ordcontbalam.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_11c04bd0839a4ca58cd58408ff37144c }}/ordinarioback:${{ github.sha }}'

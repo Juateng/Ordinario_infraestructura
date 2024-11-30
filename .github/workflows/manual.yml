@@ -1,0 +1,49 @@
+name: CI/CD Pipeline for Python App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Configura el repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Configura Python y ejecuta pruebas
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest --maxfail=1 --disable-warnings
+
+    # Configura Docker y construye la imagen
+    - name: Log in to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: <YOUR_ACR_LOGIN_SERVER>
+        username: OrdinarioBalam
+        password: d4x2OojeeX4FyQo8VrHXJ84d+JI+zQdn9Ytuf6id/1+ACRAx1LXQ
+
+    - name: Build Docker image
+      run: |
+        docker build -t ordinariobalam.azurecr.io/ordinarioback:latest .
+
+    - name: Push Docker image to ACR
+      run: |
+        docker push ordinariobalam.azurecr.io/ordinarioback:latest

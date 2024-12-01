@@ -1,22 +1,17 @@
-# Usa una imagen base de Python
-FROM python:3.9
+# Usa una imagen base con Python
+FROM python:3.9-slim
 
-# Crea un directorio de trabajo
+# Configura el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia el resto de los archivos de la aplicación
-COPY . /app
+# Copia los archivos del proyecto al contenedor
+COPY . .
 
-# Copia el archivo de requerimientos
-COPY requirements.txt /app/requirements.txt
-
-# Instala las dependencias
+# Instala las dependencias desde el archivo requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-
-# Expone el puerto (por ejemplo, 5000 para Flask)
+# Exponer el puerto que usará la app
 EXPOSE 5000
 
-# Comando para ejecutar la aplicación
-CMD [ "python", "backord.py"]
-
+# Comando para ejecutar la app
+CMD ["python", "backord.py"]
